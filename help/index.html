@@ -317,19 +317,15 @@
 					</li>
 					<li>
 						<p class="double_column">
-							Determine which edges you want to join in the laser cut assembly. Separate each individual edge. To elaborate, each different joint edge should be its own path; in Illustrator, a common method is to use the "cut" (scissors) tool to separate paths into different edge segments.
-							<br><br>
-							<b>Straight edges should only have two anchor points, defining the start and end of the line. The start and end anchor points should not have any "handles".</b>
+							Joinery will automatically split edges on all individual straight paths, and not split edges between any curved paths. If you would like to define multiple join types on a curved path, you need to split the path in your vector editor.
 						</p>
 						<p class="double_column">
 							<img src="images/images-03.png">
 						</p>
 					</li>
 					<li>
-						<p class="double_column">
-							Ensure that all joint edges are ungrouped. Other artwork that will not be used for joints can be grouped. Joinery will not be able to edit paths in a group, and you can use this to organize the paths in your file.
-							<br><br>
-							<b>Export your file to SVG. Ensure that the SVG is not responsive. If you are using Illustrator, use the "export" function to create the SVG, rather than "save as".</b>
+						<p>
+							Export your file to SVG. Ensure that the SVG is not responsive. If you are using Illustrator, use the "export" function to create the SVG, rather than "save as".
 						</p>
 					</li>
 				</ol>
