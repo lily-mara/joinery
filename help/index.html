@@ -7,7 +7,7 @@
 	<title>Joinery - Help</title>
 	<meta name="description" content="Parametric joint generation for laser cutting">
 	<meta name="author" content="Clement Zheng (clementzheng.info)">
-	
+
 	<!--CSS-->
 	<link href="https://fonts.googleapis.com/css?family=Karla:400,400i,700,700i" rel="stylesheet">
 
@@ -47,7 +47,6 @@
 		}
 
 		a {
-			text-decoration: none;
 			color: black;
 		}
 
@@ -270,27 +269,25 @@
 
 
 	</style>
-	
+
 	<!--SCRIPTS-->
-	
-	
+
+
 </head>
 
 <body>
 
 	<div id="content_container">
-		<a name="about"></a>
 		<div class="container section bottom_buffer">
-			<h1 class="twelve column">About</h1>
+			<h1 id="about" class="twelve column">About</h1>
 			<div class="six column">
-				<p><a href="../index.html" target="_blank"><u>Access Joinery here</u></a></p>
-				<p></p>
+				<p><a href="../index.html" target="_blank">Access Joinery here</a>. The source code is available on <a href="https://github.com/lily-mara/joinery">Github</a>.</p>
+				<p>There is also a tutorial on <a href="https://www.instructables.com/Joinery-Joints-for-Laser-Cut-Assemblies/">Instructables</a></p>
 			</div>
 		</div>
 
-		<a name="gettingstarted"></a>
 		<div class="container subsection bottom_buffer">
-			<h1 class="twelve column">Getting Started</h1>
+			<h1 id="gettingstarted" class="twelve column">Getting Started</h1>
 			<div class="five column">
 				<p>Joinery is a web-based tool kit designed to help users generate parametric joints for laser cutting. It takes SVG documents as input, and enables users to define joints by selecting a pair of paths in an SVG. Various joint profiles can be created and applied to the joints&mdash;and these can be customized based on material needs and user preferences.</p>
 			</div><br>
@@ -300,9 +297,8 @@
 			</div>
 		</div>
 
-		<a name="svgprep"></a>
 		<div class="container subsection bottom_buffer">
-			<h2 class="twelve column">SVG Preparation</h2>
+			<h2 id="svgprep" class="twelve column">SVG Preparation</h2>
 			<div class="five column">
 				<p>This tool kit generates joints based on SVG files as input. We will use Adobe Illustrator in the following instructions to explain SVG preparation; but, the same should apply for any other vector drawing tool.
 				</p>
@@ -316,7 +312,7 @@
 							<b>Make sure your document's units is set to millimeters or inches!</b>
 						</p>
 						<p class="double_column">
-							<img src="images/images-02.png">	
+							<img src="images/images-02.png">
 						</p>
 					</li>
 					<li>
@@ -326,7 +322,7 @@
 							<b>Straight edges should only have two anchor points, defining the start and end of the line. The start and end anchor points should not have any "handles".</b>
 						</p>
 						<p class="double_column">
-							<img src="images/images-03.png">	
+							<img src="images/images-03.png">
 						</p>
 					</li>
 					<li>
@@ -340,27 +336,25 @@
 			</div>
 		</div>
 
-		<a name="loadsvg"></a>
 		<div class="container subsection bottom_buffer">
-			<h2 class="twelve column">Loading SVGs</h2>
+			<h2 id="loadsvg" class="twelve column">Loading SVGs</h2>
 			<div class="twelve column">
 				<ol>
 					<li>
 						<p class="double_column">
-							Open Joinery on a web browser. <a href="../index.html" target="_blank"><u>link</u></a><br><br>
+							Open Joinery on a web browser. <a href="../index.html" target="_blank">link</a><br><br>
 							Click on the "Load SVG" button to import an SVG file into the tool kit. Multiple SVG files can be imported into the same workspace.
 						</p>
 						<p class="double_column">
-							<img src="images/images-04.png">	
+							<img src="images/images-04.png">
 						</p>
 					</li>
 				</ol>
 			</div>
 		</div>
 
-		<a name="basiccontrol"></a>
 		<div class="container subsection bottom_buffer">
-			<h2 class="twelve column">Basic Controls</h2>
+			<h2 id="basiccontrol" class="twelve column">Basic Controls</h2>
 			<div class="twelve column">
 				<ol>
 					<li>
@@ -371,7 +365,7 @@
 							The workspace occupies the rest of the interface, and this is where imported SVG files are displayed.
 						</p>
 						<p class="double_column">
-							<img src="images/images-01.png">	
+							<img src="images/images-01.png">
 						</p>
 					</li>
 					<li>
@@ -393,9 +387,8 @@
 			</div>
 		</div>
 
-		<a name="definingjoint"></a>
 		<div class="container subsection bottom_buffer">
-			<h2 class="twelve column">Defining Joints</h2>
+			<h2 id="definingjoint" class="twelve column">Defining Joints</h2>
 			<div class="twelve column">
 				<ol>
 					<li>
@@ -403,7 +396,7 @@
 							The <b>set joints</b> tool is used to define joints by selecting edge pairs. Hovering over a SVG path with this tool will highlight the path if it is a valid joint path. Click on the path to add it to a joint.
 						</p>
 						<p class="double_column">
-							<img src="images/images-05.png">	
+							<img src="images/images-05.png">
 						</p>
 					</li>
 					<li>
@@ -411,7 +404,7 @@
 							A joint is defined once two edges have been selected. Joints will appear in the joint list panel, and will be connected via dashed lines in the workspace.
 						</p>
 						<p class="double_column">
-							<img src="images/images-06.png">	
+							<img src="images/images-06.png">
 						</p>
 					</li>
 					<li>
@@ -423,9 +416,8 @@
 			</div>
 		</div>
 
-		<a name="creatingjointprofile"></a>
 		<div class="container subsection bottom_buffer">
-			<h2 class="twelve column">Creating Joint Profiles</h2>
+			<h2 id="creatingjointprofile" class="twelve column">Creating Joint Profiles</h2>
 			<div class="twelve column">
 				<ol>
 					<li>
@@ -433,7 +425,7 @@
 							Joinery offers various joint profiles for different purposes. To add a joint profile, click on the joint profile dropdown menu. As you hover over the different joint profiles, a thumbnail will appear showing an example of that profile.
 						</p>
 						<p class="double_column">
-							<img src="images/images-07.png">	
+							<img src="images/images-07.png">
 						</p>
 					</li>
 					<li>
@@ -441,7 +433,7 @@
 							Click to select a joint profile from the dropdown menu, and click "add" to create a joint profile.
 						</p>
 						<p class="double_column">
-							<img src="images/images-08.png">	
+							<img src="images/images-08.png">
 						</p>
 					</li>
 					<li>
@@ -450,19 +442,18 @@
 							The notes text box allows you to jot down notes for later reference. This can include material or design details.<br><br>
 							Joint parameter values can be modified by typing new values for the different parameters.<br><br>
 							<b>"set joint"</b> saves the notes and parameters and applies any changes.<br><br>
-							<b>"save profile"</b> exports the current joint profile. Exported joint profiles can be loaded via the "load" button in the joint profile panel. Use this to save profiles for future use, or to share them with others. 
+							<b>"save profile"</b> exports the current joint profile. Exported joint profiles can be loaded via the "load" button in the joint profile panel. Use this to save profiles for future use, or to share them with others.
 						</p>
 						<p class="double_column">
-							<img src="images/images-09.png">	
+							<img src="images/images-09.png">
 						</p>
 					</li>
 				</ol>
 			</div>
 		</div>
 
-		<a name="modifyingjoint"></a>
 		<div class="container subsection bottom_buffer">
-			<h2 class="twelve column">Modifying Joints</h2>
+			<h2 id="modifyingjoint" class="twelve column">Modifying Joints</h2>
 			<div class="twelve column">
 				<ol>
 					<li>
@@ -470,7 +461,7 @@
 							Selecting a joint in the joint list panel expands it. Select a joint profile from the dropdown menu to apply that joint profile to the joint. The same joint profile can be applied to multiple joints. Modifying the parameters of a joint profile will therefore modify all the joints it is applied to.
 						</p>
 						<p class="double_column">
-							<img src="images/images-10.png">	
+							<img src="images/images-10.png">
 						</p>
 					</li>
 					<li>
@@ -486,7 +477,7 @@
 							<b>"swap M/F"</b> swaps male and female joints.
 						</p>
 						<p class="double_column">
-							<img src="images/images-11.png">	
+							<img src="images/images-11.png">
 						</p>
 					</li>
 					<li>
@@ -496,7 +487,7 @@
 							You should see the dashed lines connecting the two edges of a joint flip after reversing. You can also use the "reverse path" tool and click on the path you would like to reverse.
 						</p>
 						<p class="double_column">
-							<img src="images/images-12.png">	
+							<img src="images/images-12.png">
 						</p>
 					</li>
 					<li>
@@ -506,16 +497,15 @@
 							You should see the joint extending in the opposite direction (normal to the path) after flipping. You can also use the "flip joints" tool and click on the path you would like to flip.
 						</p>
 						<p class="double_column">
-							<img src="images/images-13.png">	
+							<img src="images/images-13.png">
 						</p>
 					</li>
 				</ol>
 			</div>
 		</div>
 
-		<a name="exportsvg"></a>
 		<div class="container section bottom_buffer">
-			<h2 class="twelve column">Exporting SVG</h2>
+			<h2 id="exportsvg" class="twelve column">Exporting SVG</h2>
 			<div class="twelve column">
 				<ol>
 					<li>
@@ -536,9 +526,8 @@
 			</div>
 		</div>
 
-		<a name="saveproject"></a>
 		<div class="container section bottom_buffer">
-			<h2 class="twelve column">Save and Load Projects</h2>
+			<h2 id="saveproject" class="twelve column">Save and Load Projects</h2>
 			<div class="twelve column">
 				<ol>
 					<li>
@@ -551,18 +540,16 @@
 		</div>
 
 
-		<a name="jointprofile"></a>
 		<div class="container subsection bottom_buffer">
-			<h1 class="twelve column">Joint Profiles</h1>
+			<h1 id="jointprofile" class="twelve column">Joint Profiles</h1>
 			<div class="six column">
 				<p>Joinery offers various joint profiles for connecting and assembling flat parts together. Different joint profiles cater to different materials and purposes. This section elaborates on the use of each joint profile, and explains the customizable parameters within each profile.
 				</p>
 			</div><br>
 		</div>
 
-		<a name="loopinserto"></a>
 		<div class="container subsection bottom_buffer">
-			<h2 class="twelve column">Loop Insert (Overlap)</h2>
+			<h2 id="loopinserto" class="twelve column">Loop Insert (Overlap)</h2>
 			<div class="six column">
 				<p>Loop Inserts are designed to interface fabrics with fabrics, or fabrics with stiff materials. They can be used as a replacement for conventional sewing or other fasteners. Loop Insert (Overlap) extends the edge of the joint, creating an overlapping region between the two parts.<br><br>
 				<b>Note</b>
@@ -603,9 +590,8 @@
 			</div>
 		</div>
 
-		<a name="loopinsert"></a>
 		<div class="container subsection bottom_buffer">
-			<h2 class="twelve column">Loop Insert</h2>
+			<h2 id="loopinsert" class="twelve column">Loop Insert</h2>
 			<div class="six column">
 				<p>Loop Inserts are designed to interface fabrics with fabrics, or fabrics with stiff materials. They can be used as a replacement for conventional sewing or other fasteners. This Loop Insert variation does not extend the edge of the female joint; that is, there will not be overlap between the two parts.<br><br>
 				<b>Note</b>
@@ -614,7 +600,7 @@
 				</p>
 			</div>
 			<div class="six column jpGallery">
-				
+
 			</div>
 			<br>
 			<div class="six column">
@@ -646,9 +632,8 @@
 		</div>
 
 
-		<a name="loopinserts"></a>
 		<div class="container subsection bottom_buffer">
-			<h2 class="twelve column">Loop Insert (Surface)</h2>
+			<h2 id="loopinserts" class="twelve column">Loop Insert (Surface)</h2>
 			<div class="six column">
 				<p>Loop Inserts are designed to interface fabrics with fabrics, or fabrics with stiff materials. They can be used as a replacement for conventional sewing or other fasteners. This Loop Insert variation connects two surfaces together<br><br>
 				<b>Note</b>
@@ -691,9 +676,8 @@
 			</div>
 		</div>
 
-		<a name="hem"></a>
 		<div class="container subsection bottom_buffer">
-			<h2 class="twelve column">Hem</h2>
+			<h2 id="hem" class="twelve column">Hem</h2>
 			<div class="six column">
 				<p>This joint extends the edge by a specified amount. If required, it can also generate holes along the original edge to guide sewing.
 				<br><br>
@@ -702,7 +686,7 @@
 				</p>
 			</div>
 			<div class="six column jpGallery">
-				
+
 			</div>
 			<br>
 			<div class="six column">
@@ -721,9 +705,8 @@
 			</div>
 		</div>
 
-		<a name="interlocking"></a>
 		<div class="container subsection bottom_buffer">
-			<h2 class="twelve column">Interlocking</h2>
+			<h2 id="interlocking" class="twelve column">Interlocking</h2>
 			<div class="six column">
 				<p>A series of alternating tabs that interlock along the joint edge. This joint works well on flexible paper-based or plastic materials.
 				<br><br>
@@ -732,7 +715,7 @@
 				</p>
 			</div>
 			<div class="six column jpGallery">
-				
+
 			</div>
 			<br>
 			<div class="six column">
@@ -759,9 +742,8 @@
 			</div>
 		</div>
 
-		<a name="fingerjoint90"></a>
 		<div class="container subsection bottom_buffer">
-			<h2 class="twelve column">Finger Joint (90deg)</h2>
+			<h2 id="fingerjoint90" class="twelve column">Finger Joint (90deg)</h2>
 			<div class="six column">
 				<p>A series of alternating protrusions that interlocking two parts at a right angle. The is a common joint used to fabricate boxes from thicker sheet materials like acrylic and bass wood. Adhesives like hot/super glue can be used to reinforce this joint and create a permanent connection.
 				<br><br>
@@ -770,7 +752,7 @@
 				</p>
 			</div>
 			<div class="six column jpGallery">
-				
+
 			</div>
 			<br>
 			<div class="six column">
@@ -798,9 +780,8 @@
 		</div>
 
 
-		<a name="fingerjointa"></a>
 		<div class="container subsection bottom_buffer">
-			<h2 class="twelve column">Finger Joint (angle)</h2>
+			<h2 id="fingerjointa" class="twelve column">Finger Joint (angle)</h2>
 			<div class="six column">
 				<p>A series of alternating protrusions that interlocking two parts at a specified interior angle. This joint is restricted to joining parts with the same thickness, but it enables these parts to be interfaced at angles other than 90 degrees. The interior angle is the dihedral angle between two parts; that is, the plane-to-plane angle.
 				<br><br>
@@ -837,9 +818,8 @@
 			</div>
 		</div>
 
-		<a name="tabinsert"></a>
 		<div class="container subsection bottom_buffer">
-			<h2 class="twelve column">Tab Insert</h2>
+			<h2 id="tabinsert" class="twelve column">Tab Insert</h2>
 			<div class="six column">
 				<p>This joint generates a series of tabs which insert into corresponding slits on a flap. It is commonly used on paper-based materials for quick assembly. Do note that you may need to create folding lines for the tabs and flaps for stiffer materials; for example, a perforated line to make folding easier after fabrication.
 				<br><br>
@@ -880,9 +860,8 @@
 			</div>
 		</div>
 
-		<a name="flap"></a>
 		<div class="container subsection bottom_buffer">
-			<h2 class="twelve column">Flap</h2>
+			<h2 id="flap" class="twelve column">Flap</h2>
 			<div class="six column">
 				<p>This joint generates a flaps on either side of the joint, which can then be connected with adhesives such as hot glue or double sided tape.
 				<br><br>
@@ -891,7 +870,7 @@
 				</p>
 			</div>
 			<div class="six column jpGallery">
-				
+
 			</div>
 			<br>
 			<div class="six column">
