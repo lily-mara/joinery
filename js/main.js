@@ -109,6 +109,78 @@ function processSVG(e) {
 	refreshShapeDisplay();
 }
 
+// Call the given callback function for every node in the given shape in a
+// breadth-first operation
+function visitAllShapeNodes(shape, funk) {
+	let vistList = [];
+	for (let child of shape.children) {
+		vistList.push(child);
+	}
+	while (vistList.length > 0) {
+		const element = vistList.pop();
+
+		if (element.children) {
+			for (let child of element.children) {
+				vistList.push(child);
+			}
+		}
+
+		funk(element);
+	}
+}
+
+// People use layers and groups to make their SVG files easier to work with in
+// vector editors. Joinery assumes that there will be no groups or layers in the
+// document. This function strips the groups and layers from the document at all
+// levels and places all shape items at the top level.
+function flattenSVG(shape) {
+	visitAllShapeNodes(shape, (element) => {
+		if (element.className == "Group") {
+			element.parent.addChildren(element.removeChildren());
+			element.remove();
+		}
+	});
+}
+
+// Joinery assumes that all edges which will be joined together are a single
+// path element. People usually don't draw boxes by drawing four lines, they use
+// the "box" tool. This function makes Joinery a bit easier to use by
+// automatically splitting shapes like rectangles into their component paths so
+// that Joinery can work with them more easily.
+function splitShapes(shape) {
+	visitAllShapeNodes(shape, (element) => {
+		if (element.className == "Shape" && element.type == 'rectangle') {
+			const bounds = element.bounds;
+
+			// Top
+			element.parent.addChild(new paper.Path([bounds.x, bounds.y], [bounds.x + bounds.width, bounds.y]));
+
+			// Right
+			element.parent.addChild(new paper.Path([bounds.x + bounds.width, bounds.y], [bounds.x + bounds.width, bounds.y + bounds.height]));
+
+			// Bottom
+			element.parent.addChild(new paper.Path([bounds.x , bounds.y + bounds.height], [bounds.x + bounds.width, bounds.y + bounds.height]));
+
+			// Left
+			element.parent.addChild(new paper.Path([bounds.x , bounds.y ], [bounds.x, bounds.y + bounds.height]));
+
+			element.remove();
+		} else if (element.className == 'Path') {
+			// TODO
+		} else {
+			return;
+		}
+
+		// for (let i = 0; i < path.segments.length; i++) {
+		// 	const segment = path.segments[i];
+		// 	// A segment with
+		// 	if (segment.handleIn || segment.handleOut) {
+		// 		continue;
+		// 	}
+		// }
+	});
+}
+
 // Takes SVG text as input, loads the data in the file, returns an object with
 // keys `shape`, `scale` and `color`. `shape` should be pushed onto the `shape`
 // global, `scale` should be pushed to the `SVGScale` global, `color` should be
@@ -122,17 +194,8 @@ function loadSVGNoModifyGlobals(svgText) {
 
 	var newShape = paper.project.importSVG(svgText);
 
-	if (newShape.children.length==1) {
-		if (newShape.children[0].className=="Group") {
-			newShape.children[0].parent.insertChildren(newShape.children[0].index,  newShape.children[0].removeChildren());
-			for (i in newShape.children) {
-				if (newShape.children[i].className=="Group") {
-					newShape.children[i].remove();
-					break;
-				}
-			}
-		}
-	}
+	flattenSVG(newShape);
+	splitShapes(newShape);
 
 	newShape.position = new Point(window.innerWidth/2, window.innerHeight/2);
 	newShape.name = 'shape';
