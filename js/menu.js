@@ -11,7 +11,6 @@ function initForms() {
 			var name = ext[0];
 			if (ext[ext.length-1]=='svg' || ext[ext.length-1]=='SVG') {
 				reader.readAsText(file);
-				SVGprocessed = false;
 				$(reader).on('load', processSVG);
 			} else {
 				setMessage('<b>Invalid SVG</b>', '#F80');
@@ -30,7 +29,6 @@ function initForms() {
 			var name = ext[0];
 			if (ext[ext.length-1]=='svg' || ext[ext.length-1]=='SVG') {
 				reader.readAsText(file);
-				SVGprocessed = false;
 				$(reader).on('load', updateSVGShape);
 			} else {
 				setMessage('<b>Invalid SVG</b>', '#F80');
