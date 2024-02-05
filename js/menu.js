@@ -18,7 +18,7 @@ function initForms() {
 			}
 		} else {
 
-		} 
+		}
 	});
 
 	fileSelector.change(function() {
@@ -37,25 +37,7 @@ function initForms() {
 			}
 		} else {
 
-		} 
-	});
-
-	$('#loadProject').change(function() {
-		if (this.files.length) {
-			var file = this.files[0];
-			var reader = new FileReader();
-			var filename = file.name;
-			var ext = filename.split('.');
-			var name = ext[0];
-			if (ext[ext.length-1]=='joinery') {
-				reader.readAsText(file);
-				$(reader).on('load', processProject);
-			} else {
-				setMessage('<b>Invalid Joinery file</b>', '#F80');
-			}
-		} else {
-
-		} 
+		}
 	});
 
 	$('#loadJointProfile').change(function() {
@@ -71,8 +53,8 @@ function initForms() {
 				setMessage('<b>Invalid Joint Profile</b>', '#F80');
 			}
 		} else {
-			
-		} 
+
+		}
 	});
 
 	$('#leftMenuCollapse').on('click', function() {
@@ -109,7 +91,7 @@ function initForms() {
 			$('#rightMenuCollapse2').html('\u2039');
 		}
 	});
-	
+
 	$('#arrangeClick').on('click', arrangeClick);
 	$('#removeClick').on('click', removeClick);
 	$('#setClick').on('click', setClick);
@@ -117,7 +99,7 @@ function initForms() {
 	$('#flipClick').on('click', flipClick);
 	$('#panClick').on('click', panClick);
 	$('#swapClick').on('click', swapClick);
-	
+
 	$( '#leftMenu' ).mouseenter(function() {
 		insideMenu = true;
 	});
@@ -136,7 +118,7 @@ function initForms() {
 	$( '#rightMenu' ).mouseleave(function() {
 		insideMenu = false;
 	});
-	
+
 	$( '#rightMenu2' ).mouseenter(function() {
 		insideMenu = true;
 	});
@@ -181,7 +163,7 @@ function initForms() {
 		mode = remMode;
 		$('#contextMenu.active').toggleClass('active');
 	});
-	
+
 	var selectList = '';
 	for (i in jointType) {
 		if (i=='0') {
@@ -226,9 +208,9 @@ function initForms() {
 		$('#jointImageDiv').css('display', 'none');
 	});
 
-	
+
 	$('#unitMM').prop('checked', true);
-	
+
 	$('#unitMM').on('click', function() {
 		$('#unitMM').prop('checked', true);
 		$('#unitIn').prop('checked', false);
@@ -253,7 +235,7 @@ function initForms() {
 		drawGrid();
 		activateDim(dimBool);
 	});
-	
+
 	$('#unitIn').on('click', function() {
 		$('#unitIn').prop('checked', true);
 		$('#unitMM').prop('checked', false);
@@ -281,7 +263,7 @@ function initForms() {
 		drawGrid();
 		activateDim(dimBool);
 	});
-	
+
 	$('#dimOn').on('click', function() {
 		if ($('#dimOn').is(':checked')) {
 			dimBool = true;
@@ -360,7 +342,7 @@ function flipClick() {
 	generateJointLines();
 	displayJointLines();
 	generateEdgeNormals();
-	displayFlipLines();	
+	displayFlipLines();
 }
 
 function swapClick() {
@@ -374,7 +356,7 @@ function swapClick() {
 	generateJointLines();
 	displayJointLines();
 	generateEdgeNormals();
-	displayFlipLines();	
+	displayFlipLines();
 }
 
 function panClick() {
@@ -426,10 +408,10 @@ function createJointProfileMenu(i, ic, id) {
 	html = html+'</div>'
 	html = html+'</div>'
 	$('#jointProfileListDiv').append(html);
-	
+
 	$('#'+id+' .title').on('click', function() {
 		if (!shiftDown) {
-			$('#'+id+' .paramList').toggleClass('active');	
+			$('#'+id+' .paramList').toggleClass('active');
 		} else {
 			if (mode=='set' || mode=='flip' || mode=='reverse' || mode=='swap') {
 				pasteJointProfile.bool = false;
@@ -455,8 +437,8 @@ function createJointProfileMenu(i, ic, id) {
 			}
 		}
 	});
-	
-	$('#'+id+' .title b').on('click', function() {	
+
+	$('#'+id+' .title b').on('click', function() {
 		var idString = $('#'+id).attr('id');
 		var idVal = idString.split('_');
 		idVal = parseInt(id[id.length-1]);
@@ -469,11 +451,11 @@ function createJointProfileMenu(i, ic, id) {
 			}
 		}
 		$('#'+id).remove();
-		
+
 		for (j in joints) {
 			generateJoint(j);
 		}
-		
+
 		refreshJointList();
 	});
 
@@ -495,7 +477,7 @@ function createJointProfileMenu(i, ic, id) {
 		highlight.removeChildren();
 	});
 
-	
+
 	$('#'+id+' .setVal').on('click', function() {
 		var idString = $(this).attr('id');
 		var idStringArray = idString.split('-');
@@ -518,7 +500,7 @@ function createJointProfileMenu(i, ic, id) {
 			}
 		}
 	});
-	
+
 	for (j in jointProfileList[i].param) {
 		if (docUnits=='mm') {
 			$('#'+id+' input[name="'+j+'"]').val(jointProfileList[i].param[j]);
@@ -568,7 +550,7 @@ function setJointValue(idString) {
 	}
 
 	$('#'+idString+' input').css('color', '#000');
-			
+
 	for (j in joints) {
 		generateJoint(j);
 	}
@@ -581,7 +563,7 @@ function addJointProfile() {
 	var id = 'joint_'+(jointProfileCount);
 	createJointProfile(index);
 	createJointProfileMenu((jointProfileList.length-1), jointProfileCount-1, id);
-	
+
 	refreshJointList();
 }
 
@@ -602,7 +584,7 @@ function refreshJointList() {
 		html = html+'</div>';
 		html = html+'</div>';
 		$('#jointListDiv').append(html);
-		
+
 		var bool = false;
 		$('#joint_'+jID+' .jointOptions select > option').each(function () {
 			if ($(this).val()==joints[index].profile) {
@@ -613,10 +595,10 @@ function refreshJointList() {
 		if (!bool) {
 			$('#joint_'+jID+' .jointOptions select option[value="none"]').prop('selected', true);
 		}
-		
-		
+
+
 	}
-	
+
 	$('.jointItem').each(function(){
 		var index = $(this).attr('id').split('_');
 		var shapeA = parseInt(index[2].split('-')[0]);
@@ -626,21 +608,21 @@ function refreshJointList() {
 		var id = parseInt($(this).attr('id').split('_')[1]);
 		$(this).find('select').on('change', function() {
 			joints[id].profile = $(this).find('option:selected').val();
-			generateJoint(id);			
+			generateJoint(id);
 		});
 		$(this).find('.swapMF').on('click', function() {
 			joints[id].m = (joints[id].m+1)%2;
 			joints[id].f = (joints[id].f+1)%2;
 			joints[id].dirM = joints[id].dirM*-1;
 			joints[id].dirF = joints[id].dirF*-1;
-			generateJoint(id);			
+			generateJoint(id);
 		});
 		$(this).find('.flipM').on('click', function() {
 			joints[id].dirM = joints[id].dirM*-1;
 			generateJoint(id);
 			if (mode=='flip' || mode=='set' || mode=='rev' || mode=='swap') {
 				generateEdgeNormals();
-				displayFlipLines();			
+				displayFlipLines();
 			}
 		});
 		$(this).find('.flipF').on('click', function() {
@@ -648,7 +630,7 @@ function refreshJointList() {
 			generateJoint(id);
 			if (mode=='flip' || mode=='set' || mode=='rev' || mode=='swap') {
 				generateEdgeNormals();
-				displayFlipLines();			
+				displayFlipLines();
 			}
 		});
 		$(this).find('.revM').on('click', function() {
@@ -663,9 +645,9 @@ function refreshJointList() {
 				generateJointLines();
 				displayJointLines();
 				generateEdgeNormals();
-				displayFlipLines();	
+				displayFlipLines();
 			}
-			generateJoint(id);			
+			generateJoint(id);
 		});
 		$(this).find('.revF').on('click', function() {
 			if (joints[id].f==0) {
@@ -681,7 +663,7 @@ function refreshJointList() {
 				generateEdgeNormals();
 				displayFlipLines();
 			}
-			generateJoint(id);			
+			generateJoint(id);
 		});
 		$(this).find('.title').on('click', function() {
 			if (!pasteJointProfile.bool) {
@@ -693,7 +675,7 @@ function refreshJointList() {
 						$(this).prop('selected', true);
 					}
 				});
-				generateJoint(id);	
+				generateJoint(id);
 			}
 		});
 		$(this).find('.title').find('b').on('click', function() {

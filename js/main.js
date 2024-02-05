@@ -74,7 +74,7 @@ function drawGrid() {
 			ctx.stroke();
 			count++;
 		}
-	}	
+	}
 }
 
 var inchToMM = 25.4;
@@ -155,7 +155,7 @@ function processSVG(e) {
 				if (units=='px') {
 					shape[shape.length-1].scale(inchToMM/72, shape[shape.length-1].position);
 					SVGScale.push(inchToMM/72);
-					setMessage('SVG units detected as <b>pixels</b>. Using default conversion to millimeters', '#F80');	
+					setMessage('SVG units detected as <b>pixels</b>. Using default conversion to millimeters', '#F80');
 				}
 				calProjectBounds();
 				drawGrid();
@@ -286,7 +286,7 @@ function updateSVGShape(e) {
 				if (units=='px') {
 					shape[shape.length-1].scale(inchToMM/72, shape[shape.length-1].position);
 					SVGScale.push(inchToMM/72);
-					setMessage('SVG units detected as <b>pixels</b>. Using default conversion to millimeters', '#F80');	
+					setMessage('SVG units detected as <b>pixels</b>. Using default conversion to millimeters', '#F80');
 				}
 				calProjectBounds();
 				drawGrid();
@@ -363,100 +363,96 @@ function updateSVGShape(e) {
 
 
 
-function processProject(e) {
-    var file = e.target.result,
-        results;
-    if (file && file.length) {
-    	$('#jointListDiv').empty();
-		$('#jointProfileListDiv').empty();
-		shape = [];
-		joints = [];
-		jointProfileList = [];
-		jointMake = [];
-		shapeColor = [];
-		SVGString = [];
-		SVGScale = [];
-		init();
-		var JSONfile = JSON.parse(file);
-		
-		for (var j=0; j<JSONfile.SVGString.length; j++) {
-			var units = '';
-			var w, h;
-			var splitString = JSONfile.SVGString[j].split(' ');
-			for (i in splitString) {
-				if (splitString[i].indexOf('=')==5 && splitString[i].indexOf('w')==0) {
-					var splitVal = splitString[i].split('=');
-					units = splitString[i][splitString[i].length-3]+splitString[i][splitString[i].length-2];
-					w = parseFloat(splitVal[1].split(units)[0].split('"')[1]);
-				}
-				if (splitString[i].indexOf('=')==6 && splitString[i].indexOf('h')==0) {
-					var splitVal = splitString[i].split('=');
-					units = splitString[i][splitString[i].length-3]+splitString[i][splitString[i].length-2];
-					h = parseFloat(splitVal[1].split(units)[0].split('"')[1]);
-				}
+function processProject(projectFileTextContents) {
+	$('#jointListDiv').empty();
+	$('#jointProfileListDiv').empty();
+	shape = [];
+	joints = [];
+	jointProfileList = [];
+	jointMake = [];
+	shapeColor = [];
+	SVGString = [];
+	SVGScale = [];
+	init();
+	var JSONfile = JSON.parse(projectFileTextContents);
+
+	for (var j=0; j<JSONfile.SVGString.length; j++) {
+		var units = '';
+		var w, h;
+		var splitString = JSONfile.SVGString[j].split(' ');
+		for (i in splitString) {
+			if (splitString[i].indexOf('=')==5 && splitString[i].indexOf('w')==0) {
+				var splitVal = splitString[i].split('=');
+				units = splitString[i][splitString[i].length-3]+splitString[i][splitString[i].length-2];
+				w = parseFloat(splitVal[1].split(units)[0].split('"')[1]);
 			}
-			SVGString.push(JSONfile.SVGString[j]);
-			SVGScale.push(JSONfile.SVGScale[j]);
-			shape.push(paper.project.importSVG(JSONfile.SVGString[j]));
-			if (shape[shape.length-1].children.length==1) {
-				if (shape[shape.length-1].children[0].className=="Group") {
-					shape[shape.length-1].children[0].parent.insertChildren(shape[shape.length-1].children[0].index,  shape[shape.length-1].children[0].removeChildren());
-						for (i in shape[shape.length-1].children) {
-							if (shape[shape.length-1].children[i].className=="Group") {
-								shape[shape.length-1].children[i].remove();
-								break;
-							}
+			if (splitString[i].indexOf('=')==6 && splitString[i].indexOf('h')==0) {
+				var splitVal = splitString[i].split('=');
+				units = splitString[i][splitString[i].length-3]+splitString[i][splitString[i].length-2];
+				h = parseFloat(splitVal[1].split(units)[0].split('"')[1]);
+			}
+		}
+		SVGString.push(JSONfile.SVGString[j]);
+		SVGScale.push(JSONfile.SVGScale[j]);
+		shape.push(paper.project.importSVG(JSONfile.SVGString[j]));
+		if (shape[shape.length-1].children.length==1) {
+			if (shape[shape.length-1].children[0].className=="Group") {
+				shape[shape.length-1].children[0].parent.insertChildren(shape[shape.length-1].children[0].index,  shape[shape.length-1].children[0].removeChildren());
+					for (i in shape[shape.length-1].children) {
+						if (shape[shape.length-1].children[i].className=="Group") {
+							shape[shape.length-1].children[i].remove();
+							break;
 						}
-				}
+					}
 			}
-			shape[shape.length-1].position = new Point(JSONfile.SVGPos[j][1], JSONfile.SVGPos[j][2]);
-			shape[shape.length-1].scale(SVGScale[SVGScale.length-1], shape[shape.length-1].position);
-			shape[shape.length-1].name = 'shape';
-			shapeColor.push({});
-			for (k in shape[shape.length-1].children) {
-				if (shape[shape.length-1].children[k].className=='Path') {
-					shapeColor[shapeColor.length-1][k] = shape[shape.length-1].children[k].strokeColor;
-				}
+		}
+		shape[shape.length-1].position = new Point(JSONfile.SVGPos[j][1], JSONfile.SVGPos[j][2]);
+		shape[shape.length-1].scale(SVGScale[SVGScale.length-1], shape[shape.length-1].position);
+		shape[shape.length-1].name = 'shape';
+		shapeColor.push({});
+		for (k in shape[shape.length-1].children) {
+			if (shape[shape.length-1].children[k].className=='Path') {
+				shapeColor[shapeColor.length-1][k] = shape[shape.length-1].children[k].strokeColor;
 			}
-			calProjectBounds();
-			$('#loadSVG').val('');
-			activateDim(dimBool);
 		}
-		
-		jointProfileCount = JSONfile.jointProfileCount;
-		var jointProfileCountTemp = jointProfileCount - JSONfile.jointProfileList.length;
-		for (var i=0; i<JSONfile.jointProfileList.length; i++) {
-			var id1 = JSONfile.jointProfileList[i].profile;
-			var id1Array = id1.split(' ');
-			var id = 'joint_'+id1Array[id1Array.length-1];
-			jointProfileList.push(JSONfile.jointProfileList[i]);
-			createJointProfileMenu((jointProfileList.length-1), id1Array[id1Array.length-1], id);
-			jointProfileCountTemp++;
-		}
+		calProjectBounds();
+		$('#loadSVG').val('');
+		activateDim(dimBool);
+	}
 
-		for (var i=0; i<JSONfile.joints.length; i++) {
-			var jointDetail = JSONfile.joints[i];
-			joints.push(JSONfile.joints[i]);
-			initJoint(jointDetail[0].shape, jointDetail[0].path);
-			initJoint(jointDetail[1].shape, jointDetail[1].path);
-			if (jointDetail.revA==-1) {
-				shape[jointDetail[0].shape].children[jointDetail[0].path].reverse();
-			}
-			if (jointDetail.revB==-1) {
-				shape[jointDetail[1].shape].children[jointDetail[1].path].reverse();
-			}
-			generateJoint(joints.length-1);
-			jointMake = [];
-		}
+	jointProfileCount = JSONfile.jointProfileCount;
+	var jointProfileCountTemp = jointProfileCount - JSONfile.jointProfileList.length;
+	for (var i=0; i<JSONfile.jointProfileList.length; i++) {
+		var id1 = JSONfile.jointProfileList[i].profile;
+		var id1Array = id1.split(' ');
+		var id = 'joint_'+id1Array[id1Array.length-1];
+		jointProfileList.push(JSONfile.jointProfileList[i]);
+		createJointProfileMenu((jointProfileList.length-1), id1Array[id1Array.length-1], id);
+		jointProfileCountTemp++;
+	}
 
-		refreshJointList();
-
-		for (i in joints) {
-			generateJoint[i];
+	for (var i=0; i<JSONfile.joints.length; i++) {
+		var jointDetail = JSONfile.joints[i];
+		joints.push(JSONfile.joints[i]);
+		initJoint(jointDetail[0].shape, jointDetail[0].path);
+		initJoint(jointDetail[1].shape, jointDetail[1].path);
+		if (jointDetail.revA==-1) {
+			shape[jointDetail[0].shape].children[jointDetail[0].path].reverse();
 		}
-		jointLines.removeChildren();
-		refreshShapeDisplay();
-    }
+		if (jointDetail.revB==-1) {
+			shape[jointDetail[1].shape].children[jointDetail[1].path].reverse();
+		}
+		generateJoint(joints.length-1);
+		jointMake = [];
+	}
+
+	refreshJointList();
+
+	for (i in joints) {
+		generateJoint[i];
+	}
+	jointLines.removeChildren();
+	refreshShapeDisplay();
 
     drawGrid();
     checkSVGCount();
@@ -753,7 +749,7 @@ function shapePathClick() {
 					setMessage('<b>Cannot join</b>: paths have significantly different lengths', '#F80');
 					jointMake = [];
 					tempLines.removeChildren();
-				}	
+				}
 			}
 		} else if (checkPathJoint(pathSelected.shape, pathSelected.path).joint) {
 			var index = checkPathJoint(pathSelected.shape, pathSelected.path).index;
@@ -776,7 +772,7 @@ function shapePathClick() {
 				generateJointLines();
 				displayJointLines();
 				generateEdgeNormals();
-				displayFlipLines();	
+				displayFlipLines();
 				generateJoint(index);
 				setMessage('<b>Path reversed</b>', '#444');
 			} else if (mode=='flip') {
@@ -789,7 +785,7 @@ function shapePathClick() {
 				generateJointLines();
 				displayJointLines();
 				generateEdgeNormals();
-				displayFlipLines();	
+				displayFlipLines();
 				setMessage('<b>Joint flipped</b>', '#444');
 			} else if (mode=='swap') {
 				joints[index].m = (joints[index].m+1)%2;
@@ -800,7 +796,7 @@ function shapePathClick() {
 				generateJointLines();
 				displayJointLines();
 				generateEdgeNormals();
-				displayFlipLines();	
+				displayFlipLines();
 				setMessage('<b>Swapped male and female</b>', '#444');
 			}
 		} else {
@@ -892,7 +888,7 @@ function displayFlipLines() {
 
 function removeShape() {
 	if (shapeSelected > -1 && shape.length > 0) {
-		
+
 		for (var i=0; i<joints.length; i++) {
 			for (j in joints[i]) {
 				if (j=='0' || j=='1') {
@@ -911,7 +907,7 @@ function removeShape() {
 		shapeColor.splice(shapeSelected, 1);
 		SVGString.splice(shapeSelected, 1);
 		SVGScale.splice(shapeSelected, 1);
-		
+
 		for (var i=0; i<joints.length; i++) {
 			for (j in joints[i]) {
 				if (j=='0' || j=='1') {
@@ -1026,7 +1022,11 @@ function activateDim(bool) {
 	}
 }
 
-function saveProject() {
+var projectFileHandle;
+
+const filepickerOptions = {types: [{description: 'Joinery Project File', accept: {"text/plain": [".joinery"]}}]};
+
+async function saveProject() {
 	var state = {
 		'SVGString' : [],
 		'SVGScale': [],
@@ -1048,6 +1048,49 @@ function saveProject() {
 	}
 	var saveText = JSON.stringify(state);
 	var blob = new Blob([saveText], {type: "text/plain;charset=utf-8"});
-	var d = new Date();
-	saveAs(blob, 'joinery_save_'+d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+'_'+d.getHours()+'.'+d.getMinutes()+'.'+d.getSeconds()+'.joinery');
+
+	if (!projectFileHandle) {
+		var saveFileHandle;
+		try {
+			saveFileHandle = await window.showSaveFilePicker(filepickerOptions);
+		} catch (e) {
+			console.warn('User canceled the request to save project file', e);
+			return false;
+		}
+		projectFileHandle = saveFileHandle;
+	}
+
+	const writableStream = await projectFileHandle.createWritable();
+	await writableStream.write(blob);
+	await writableStream.close();
+
+	const projectFile = await projectFileHandle.getFile();
+
+	setMessage(`<b>Saved project to ${projectFile.name}</b>`, '#444');
+	return true;
+}
+
+async function loadProject() {
+	var loadFileHandle;
+	try {
+		[loadFileHandle] = await window.showOpenFilePicker(filepickerOptions);
+	} catch (e) {
+		console.warn('User canceled the request to load project file', e);
+		return;
+	}
+	projectFileHandle = loadFileHandle;
+
+	const fileData = await projectFileHandle.getFile();
+	const fileText = await fileData.text();
+
+	processProject(fileText);
+}
+
+async function saveAsProject() {
+	const oldProjectFileHandle = projectFileHandle;
+	projectFileHandle = null;
+
+	if (!await saveProject()) {
+		projectFileHandle = oldProjectFileHandle;
+	}
 }

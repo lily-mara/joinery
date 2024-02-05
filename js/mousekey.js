@@ -5,9 +5,9 @@ var moving = false;
 var tolerance = 3;
 var insideMenu = false;
 
-window.onbeforeunload = function() {
-    return "Have you saved your work?";
-};
+addEventListener("beforeunload", (event) => {
+	event.preventDefault();
+});
 
 document.onmousemove = function(e){
 	if (initialized) {
@@ -74,7 +74,7 @@ document.onmousemove = function(e){
 $(document).bind("contextmenu", function (event) {
     if (initialized && !insideMenu) {
     	event.preventDefault();
-    	
+
     	if (pathSelected.shape != -1 && pathSelected.path != -1 && !$('#contextMenu').hasClass('active')) {
     		$('#contextMenu').toggleClass('active');
     		$('#contextMenu').css({'top':mousePosition.y+'px', 'left':mousePosition.x+5+'px'});
@@ -187,7 +187,7 @@ document.onwheel = function(e) {
 
 var rememberMode = '';
 document.onkeyup = function(e) {
-	if (initialized && !$("input,textarea").is(":focus")) {		
+	if (initialized && !$("input,textarea").is(":focus")) {
 		var key = e.keyCode ? e.keyCode : e.which;
 		if (key==32) { // space
 			if (mode=='pan' && rememberMode!='pan') {
@@ -231,13 +231,13 @@ document.onkeyup = function(e) {
 			// 	refreshShapeDisplay();
 			// 	refreshJointList();
 			// }
-			
+
 			// if (key==66) { // 'b'
 			// 	console.log(shape);
 			// 	console.log(joints);
 			// }
 		}
-		
+
 		if (ctrlDown) {
 			/* if (key==83) {  // 's'
 				setMessage('<b>Exporting SVG Please wait</b>', '#F80');
@@ -247,7 +247,7 @@ document.onkeyup = function(e) {
 				zoomToFit();
 			}
 		}
-		
+
 		if (key==17) {
 			ctrlDown = false;
 		}
