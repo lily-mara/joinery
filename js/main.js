@@ -149,35 +149,49 @@ function flattenSVG(shape) {
 // that Joinery can work with them more easily.
 function splitShapes(shape) {
 	visitAllShapeNodes(shape, (element) => {
+		let path;
 		if (element.className == "Shape" && element.type == 'rectangle') {
-			const bounds = element.bounds;
-
-			// Top
-			element.parent.addChild(new paper.Path([bounds.x, bounds.y], [bounds.x + bounds.width, bounds.y]));
-
-			// Right
-			element.parent.addChild(new paper.Path([bounds.x + bounds.width, bounds.y], [bounds.x + bounds.width, bounds.y + bounds.height]));
-
-			// Bottom
-			element.parent.addChild(new paper.Path([bounds.x , bounds.y + bounds.height], [bounds.x + bounds.width, bounds.y + bounds.height]));
-
-			// Left
-			element.parent.addChild(new paper.Path([bounds.x , bounds.y ], [bounds.x, bounds.y + bounds.height]));
-
+			path = element.toPath();
 			element.remove();
 		} else if (element.className == 'Path') {
-			// TODO
+			path = element;
 		} else {
 			return;
 		}
 
-		// for (let i = 0; i < path.segments.length; i++) {
-		// 	const segment = path.segments[i];
-		// 	// A segment with
-		// 	if (segment.handleIn || segment.handleOut) {
-		// 		continue;
-		// 	}
-		// }
+		let previousSegment = path.firstSegment;
+		let currentRunOfSmoothSegments = [];
+		for (let i = 1; i < path.segments.length; i++) {
+			const segment = path.segments[i];
+
+			if (segment.handleIn.isZero() && previousSegment.handleOut.isZero()) {
+				if (currentRunOfSmoothSegments.length > 0) {
+					path.parent.addChild(new paper.Path(currentRunOfSmoothSegments));
+					currentRunOfSmoothSegments = [];
+				}
+
+				path.parent.addChild(new paper.Path([previousSegment, segment]));
+			} else {
+				if (currentRunOfSmoothSegments.length == 0) {
+					currentRunOfSmoothSegments.push(path.segments[i - 1]);
+				}
+				currentRunOfSmoothSegments.push(segment);
+			}
+
+			previousSegment = segment;
+		}
+
+		if (path.isClosed()) {
+			if (path.lastSegment.handleOut.isZero() && path.firstSegment.handleIn.isZero()) {
+				path.parent.addChild(new paper.Path([path.lastSegment, path.firstSegment]))
+			} else {
+				currentRunOfSmoothSegments.push(path.firstSegment)
+			}
+		}
+
+		path.parent.addChild(new paper.Path(currentRunOfSmoothSegments));
+
+		path.remove();
 	});
 }
 
